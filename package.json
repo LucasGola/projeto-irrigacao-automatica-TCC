@@ -4,7 +4,10 @@
   "description": "Esse projeto faz parte do meu TCC é compõe o servidor que será responsável por coletar as informações e enviar para o dashboard",
   "main": "index.js",
   "scripts": {
-    "start": "nodemon -r esm index.js"
+    "start": "nodemon -r esm index.js",
+    "migrate": "npx sequelize-cli db:migrate",
+    "undo migrate": "npx sequelize-cli db:migrate:undo",
+    "drop all": "npm sequelize-cli db:migrate:undo:all"
   },
   "author": "",
   "license": "ISC",
@@ -19,6 +22,10 @@
     "moment": "^2.30.1",
     "nodemon": "^3.1.0",
     "path": "^0.12.7",
-    "sequelize": "^5.11.0"
+    "sequelize": "^6.37.3",
+    "sequelize-cli": "^6.6.2"
+  },
+  "devDependencies": {
+    "mysql2": "^3.9.7"
   }
 }
