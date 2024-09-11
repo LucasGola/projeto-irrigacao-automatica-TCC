@@ -15,7 +15,7 @@ app.use(cors({
     methods: 'POST, GET, PUT, DELETE, PATCH, HEAD, OPTIONS',
     origin: true
 }));
-// app.use(routes);
+app.use(routes);
 
 app.listen(process.env.PORT, () => {
     console.log(`App listening on port ${process.env.PORT}`);

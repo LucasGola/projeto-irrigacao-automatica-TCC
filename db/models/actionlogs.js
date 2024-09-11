@@ -16,10 +16,12 @@ module.exports = (sequelize, DataTypes) => {
   ActionLogs.init({
     action: DataTypes.STRING,
     beforeChanges: DataTypes.STRING,
-    afterChanges: DataTypes.STRING
+    afterChanges: DataTypes.STRING,
+    plantId: DataTypes.INTEGER
   }, {
     sequelize,
     modelName: 'ActionLogs',
+    paranoid: true,
   });
   return ActionLogs;
 };

@@ -17,14 +17,15 @@ module.exports = {
         allowNull: false,
         type: Sequelize.STRING
       },
+      plantId: {
+        allowNull: true,
+        type: Sequelize.INTEGER
+      },
       createdAt: {
         allowNull: false,
+        defaultValue: new Date().toISOString().replace(/T/, ' ').replace(/\..+/, ''),
         type: Sequelize.DATE
       },
-      updatedAt: {
-        allowNull: false,
-        type: Sequelize.DATE
-      }
     });
   },
   async down(queryInterface, Sequelize) {

@@ -14,12 +14,13 @@ module.exports = (sequelize, DataTypes) => {
     }
   }
   ErrorLogs.init({
-    date: DataTypes.DATE,
     error: DataTypes.STRING,
-    action: DataTypes.STRING
+    action: DataTypes.STRING,
+    plantId: DataTypes.INTEGER
   }, {
     sequelize,
     modelName: 'ErrorLogs',
+    paranoid: true,
   });
   return ErrorLogs;
 };

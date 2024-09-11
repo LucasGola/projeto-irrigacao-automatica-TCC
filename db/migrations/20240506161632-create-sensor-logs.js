@@ -23,12 +23,9 @@ module.exports = {
       },
       createdAt: {
         allowNull: false,
+        defaultValue: new Date().toISOString().replace(/T/, ' ').replace(/\..+/, ''),
         type: Sequelize.DATE
       },
-      updatedAt: {
-        allowNull: false,
-        type: Sequelize.DATE
-      }
     });
   },
   async down(queryInterface, Sequelize) {
