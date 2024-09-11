@@ -33,20 +33,18 @@ module.exports = {
         allowNull: false,
         type: Sequelize.INTEGER,
       },
-      idealWeather: {
-        allowNull: false,
-        type: Sequelize.STRING,
-      },
-      idealTemperatureWeather: {
-        allowNull: false,
-        type: Sequelize.INTEGER,
-      },
       createdAt: {
         allowNull: false,
+        defaultValue: new Date().toISOString().replace(/T/, ' ').replace(/\..+/, ''),
         type: Sequelize.DATE,
       },
       updatedAt: {
         allowNull: false,
+        defaultValue: new Date().toISOString().replace(/T/, ' ').replace(/\..+/, ''),
+        type: Sequelize.DATE,
+      },
+      deletedAt: {
+        allowNull: true,
         type: Sequelize.DATE,
       }
     });
