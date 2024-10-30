@@ -1,23 +1,26 @@
 'use strict';
-/** @type {import('sequelize-cli').Migration} */
 module.exports = {
-  async up(queryInterface, Sequelize) {
-    await queryInterface.createTable('SensorLogs', {
+  up: async (queryInterface, Sequelize) => {
+    await queryInterface.createTable('IrrigationLogs', {
       id: {
         allowNull: false,
         autoIncrement: true,
         primaryKey: true,
         type: Sequelize.INTEGER
       },
-      sensor: {
-        allowNull: false,
-        type: Sequelize.STRING
-      },
-      measurement: {
+      action: {
         allowNull: false,
         type: Sequelize.STRING
       },
       plantId: {
+        allowNull: false,
+        type: Sequelize.INTEGER
+      },
+      climateTemperature: {
+        allowNull: false,
+        type: Sequelize.INTEGER
+      },
+      soilHumidity: {
         allowNull: false,
         type: Sequelize.INTEGER
       },
@@ -30,10 +33,10 @@ module.exports = {
         allowNull: false,
         defaultValue: new Date().toISOString().replace(/T/, ' ').replace(/\..+/, ''),
         type: Sequelize.DATE
-      },
+      }
     });
   },
-  async down(queryInterface, Sequelize) {
-    await queryInterface.dropTable('SensorLogs');
+  down: async (queryInterface, Sequelize) => {
+    await queryInterface.dropTable('IrrigationLogs');
   }
 };

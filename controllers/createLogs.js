@@ -1,5 +1,5 @@
 import _ from 'lodash';
-import models from '../../db/models';
+import models from "../db/models";
 
 
 export const createErrorLog = async (error, action, plantId) => {

@@ -10,9 +10,7 @@ module.exports = {
       type: "Cacto",
       idealWaterPercent: 50,
       minWaterPercent: 5,
-      maxWaterPercent: 80,
-      idealWeather: "Clima quente com baixa umidade e luz (meia sombra)",
-      idealTemperatureWeather: 23,
+      idealTemperatureWeather: 20
     }], {});
   },
 

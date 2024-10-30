@@ -19,7 +19,7 @@ module.exports = (sequelize, DataTypes) => {
     type: DataTypes.STRING,
     idealWaterPercent: DataTypes.INTEGER,
     minWaterPercent: DataTypes.INTEGER,
-    maxWaterPercent: DataTypes.INTEGER,
+    idealTemperatureWeather: DataTypes.INTEGER,
   }, {
     sequelize,
     modelName: 'Plants',

@@ -29,7 +29,7 @@ module.exports = {
         allowNull: false,
         type: Sequelize.INTEGER,
       },
-      maxWaterPercent: {
+      idealTemperatureWeather: {
         allowNull: false,
         type: Sequelize.INTEGER,
       },

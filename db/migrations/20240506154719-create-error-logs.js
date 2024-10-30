@@ -26,6 +26,11 @@ module.exports = {
         defaultValue: new Date().toISOString().replace(/T/, ' ').replace(/\..+/, ''),
         type: Sequelize.DATE
       },
+      updatedAt: {
+        allowNull: false,
+        defaultValue: new Date().toISOString().replace(/T/, ' ').replace(/\..+/, ''),
+        type: Sequelize.DATE
+      },
     });
   },
   async down(queryInterface, Sequelize) {

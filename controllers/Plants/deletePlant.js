@@ -1,37 +1,37 @@
 import _ from 'lodash';
 import models from '../../db/models';
-import { createActionLog, createErrorLog } from '../createLogs'
+import { createActionLog, createErrorLog } from '../createLogs';
 
 const deletePlant = async (req, res) => {
-    const { id } = req.body;
-
+    const { plantId } = req.body;
     try {
-        if (_.isNil(id)) throw new Error("É necessário o ID da planta para apaga-la.")
+        if (_.isNil(plantId)) throw new Error("É necessário o ID da planta para apaga-la.");
+
+        const plant = await models.Plants.findOne({ where: { id: plantId, deletedAt: null } });
+        if (_.isNil(plant)) throw new Error("Nenhuma planta encontrada com o ID fornecido.");
 
         await models.sequelize.transaction(async (transaction) => {
-            const data = await models.Products.destroy({
+            const data = await models.Plants.destroy({
                 where: {
-                    id,
+                    id: plantId,
+                    deletedAt: null
                 },
             }, {
                 transaction
-            })
-
-            if (_.isNil(data)) throw new Error("Não foi possível apagar a planta.")
-
-            createActionLog("Planta deletada", null, null, id)
+            });
+            await createActionLog("Planta deletada", null, null, plantId);
             return res.status(200).json({
                 message: "Planta deletada com sucesso!",
                 data
-            })
-        })
+            });
+        });
     } catch (err) {
-        createErrorLog(err.stack, "Deletar planta", id)
+        await createErrorLog(err.stack, "Deletar planta", plantId);
         return res.status(500).json({
             message: "Erro ao deletar planta!",
             error: err.message
-        })
+        });
     }
 };
 
-export default deletePlant
+export default deletePlant;

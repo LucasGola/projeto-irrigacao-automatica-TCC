@@ -1,8 +1,12 @@
 import { Router } from "express";
-import Plants from "../controllers/Plants"
+import plantsRouter from "./Plants";
+import sensorsRouter from "./Sensors";
+import eventsRouter from "./Events";
 
 const router = Router();
 
-router.get('/plant-info', Plants.getPlantInfo)
+router.use('/plants', plantsRouter);
+router.use('/sensors', sensorsRouter);
+router.use('/events', eventsRouter);
 
 export default router;

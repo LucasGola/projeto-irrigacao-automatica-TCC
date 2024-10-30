@@ -6,8 +6,11 @@
   "scripts": {
     "start": "nodemon -r esm index.js",
     "migrate": "npx sequelize-cli db:migrate",
-    "undo migrate": "npx sequelize-cli db:migrate:undo",
-    "drop all": "npm sequelize-cli db:migrate:undo:all"
+    "undo:migrate": "npx sequelize-cli db:migrate:undo",
+    "drop:all": "npx sequelize-cli db:migrate:undo:all",
+    "seed": "npx sequelize-cli db:seed:all",
+    "undo:seed": "npx sequelize-cli db:seed:undo",
+    "undo:all:seeds": "npx sequelize-cli db:seed:undo:all"
   },
   "author": "",
   "license": "ISC",
