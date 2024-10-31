@@ -3,32 +3,59 @@ import models from "../../db/models"
 import { createErrorLog, createActionLog } from '../createLogs';
 
 export default async function updatePlantInfo(req, res) {
-    const { plantId, idealWaterPercent, minWaterPercent, idealTemperatureWeather } = req.body;
+    const { plantId, idealWaterPercent, minWaterPercent,
+        maxTemperatureClimate, minTemperatureClimate, isActive } = req.body;
 
     try {
         if (_.isNil(idealWaterPercent) || _.isNil(minWaterPercent) ||
-            _.isNil(idealTemperatureWeather)) throw new Error("Todos os campos são necessários");
-
-        const plant = await models.Plants.findOne({ where: { id: plantId, deletedAt: null } });
-        if (_.isNil(plant)) throw new Error("Nenhuma planta encontrada com o ID fornecido.");
-
-        const oldData = `{
-            ${plant.dataValues.idealWaterPercent},
-            ${plant.dataValues.minWaterPercent},
-            ${plant.dataValues.idealTemperatureWeather},
-        }`
-
-        const newObject = `{
-            ${idealWaterPercent},
-            ${minWaterPercent},
-            ${idealTemperatureWeather},
-        }`
+            _.isNil(maxTemperatureClimate) || _.isNil(minTemperatureClimate) ||
+            _.isNil(isActive)) throw new Error("Todos os campos são necessários");
 
         await models.sequelize.transaction(async (transaction) => {
+            if (isActive == true) {
+                const oldActivePlant = await models.Plants.findOne({ where: { isActive: true, deletedAt: null } });
+
+                if (_.isNil(oldActivePlant)) throw new Error("Não foi possível localizar a antiga planta ativa.");
+
+                const oldActivePlantUpdated = await models.Plants.update({
+                    isActive: false,
+                    updatedAt: new Date().toISOString().replace(/T/, ' ').replace(/\..+/, ''),
+                }, {
+                    where: {
+                        id: oldActivePlant.id,
+                        deletedAt: null
+                    },
+                }, {
+                    transaction
+                })
+
+                if (_.isNil(oldActivePlantUpdated)) throw new Error("Não foi possível atualizar o status da antiga planta ativa.");
+            }
+
+            const plant = await models.Plants.findOne({ where: { id: plantId, deletedAt: null } });
+            if (_.isNil(plant)) throw new Error("Nenhuma planta encontrada com o ID fornecido.");
+
+            const oldData = `{
+            ${plant.dataValues.idealWaterPercent},
+            ${plant.dataValues.minWaterPercent},
+            ${plant.dataValues.maxTemperatureClimate},
+            ${plant.dataValues.minTemperatureClimate},
+        }`
+
+            const newObject = `{
+            ${idealWaterPercent},
+            ${minWaterPercent},
+            ${maxTemperatureClimate},
+            ${minTemperatureClimate},
+        }`
+
+
             const data = await models.Plants.update({
                 idealWaterPercent,
                 minWaterPercent,
-                idealTemperatureWeather,
+                maxTemperatureClimate,
+                minTemperatureClimate,
+                isActive,
                 updatedAt: new Date().toISOString().replace(/T/, ' ').replace(/\..+/, ''),
             }, {
                 where: {

@@ -2,29 +2,28 @@ import _ from "lodash";
 import models from "../../db/models"
 import { createErrorLog, createActionLog } from '../createLogs';
 
-export default async function getPlantInfo(req, res) {
+export default async function getAllPlantInfo(req, res) {
     try {
         await models.sequelize.transaction(async (transaction) => {
-            const data = await models.Plants.findOne({
+            const data = await models.Plants.findAll({
                 where: {
-                    isActive: true,
                     deletedAt: null
                 },
             })
 
-            if (_.isNil(data)) throw new Error("Não encontramos nenhuma planta com este ID")
+            if (_.isNil(data)) throw new Error("Não foi possível buscar as plantas!")
 
-            await createActionLog("Busca de planta", null, null, data.id)
+            await createActionLog("Busca por todas as plantas", null, null, null)
             return res.status(200).json({
-                message: "Planta localizada!",
+                message: "Plantas localizada!",
                 data
             })
         })
 
     } catch (err) {
-        await createErrorLog(err.stack, "Busca de planta", null)
+        await createErrorLog(err.stack, "Busca por todas as plantas", null)
         return res.status(500).json({
-            message: "Ouve um erro ao buscar os dados da planta.",
+            message: "Ouve um erro ao buscar as plantas.",
             error: err.message
         })
     }

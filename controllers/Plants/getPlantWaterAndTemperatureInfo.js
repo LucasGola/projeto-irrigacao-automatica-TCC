@@ -2,7 +2,7 @@ import _ from "lodash";
 import models from "../../db/models"
 import { createErrorLog, createActionLog } from '../createLogs';
 
-export default async function getPlantWaterPercent(req, res) {
+export default async function getPlantWaterAndTemperatureInfo(req, res) {
     const { plantId } = req.body;
 
     try {
@@ -11,8 +11,9 @@ export default async function getPlantWaterPercent(req, res) {
         const data = await models.Plants.findOne({
             where: {
                 id: plantId,
+                deletedAt: null
             },
-            attributes: ['minWaterPercent', 'idealWaterPercent']
+            attributes: ['minWaterPercent', 'idealWaterPercent', 'maxTemperatureClimate', 'minTemperatureClimate']
         });
 
         if (_.isNil(data)) throw new Error("Não encontramos nenhuma planta com este ID")

@@ -3,8 +3,9 @@ import Plants from "../../controllers/Plants";
 
 const plantsRouter = Router();
 
-plantsRouter.get('/info', Plants.getPlantInfo);
-plantsRouter.get('/water-percent', Plants.getPlantWaterPercent);
+plantsRouter.get('/active-plant-info', Plants.getPlantInfo);
+plantsRouter.get('/info/all', Plants.getAllPlantInfo);
+plantsRouter.get('/water-and-tempreature-info', Plants.getPlantWaterAndTemperatureInfo);
 plantsRouter.post('/register', Plants.registerPlant);
 plantsRouter.put('/update-info', Plants.updatePlantInfo);
 plantsRouter.delete('/delete', Plants.deletePlant);

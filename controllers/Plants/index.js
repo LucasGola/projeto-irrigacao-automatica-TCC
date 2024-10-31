@@ -1,13 +1,15 @@
 import deletePlant from "./deletePlant";
 import registerPlant from "./registerPlant";
 import getPlantInfo from "./getPlantInfo";
-import getPlantWaterPercent from "./getPlantWaterPercent";
+import getPlantWaterAndTemperatureInfo from "./getPlantWaterAndTemperatureInfo";
 import updatePlantInfo from "./updatePlant";
+import getAllPlantInfo from "./getAllPlantInfo";
 
 export default {
     deletePlant,
     registerPlant,
     getPlantInfo,
-    getPlantWaterPercent,
+    getAllPlantInfo,
+    getPlantWaterAndTemperatureInfo,
     updatePlantInfo,
 }
