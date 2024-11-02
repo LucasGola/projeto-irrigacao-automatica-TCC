@@ -12,7 +12,8 @@ module.exports = {
       minWaterPercent: 40,
       maxTemperatureClimate: 24,
       minTemperatureClimate: 18,
-      isActive: true
+      isActive: true,
+      irrigationFrequency: 24,
     }, {
       userId: 1,
       name: "Cacto",
@@ -21,7 +22,8 @@ module.exports = {
       minWaterPercent: 0,
       maxTemperatureClimate: 30,
       minTemperatureClimate: 20,
-      isActive: false
+      isActive: false,
+      irrigationFrequency: 72,
     }, {
       userId: 1,
       name: "Espada-De-São-Jorge",
@@ -30,7 +32,8 @@ module.exports = {
       minWaterPercent: 10,
       maxTemperatureClimate: 30,
       minTemperatureClimate: 15,
-      isActive: false
+      isActive: false,
+      irrigationFrequency: 72,
     }, {
       userId: 1,
       name: "Dinheiro-Em-Penca",
@@ -39,7 +42,8 @@ module.exports = {
       minWaterPercent: 10,
       maxTemperatureClimate: 30,
       minTemperatureClimate: 15,
-      isActive: false
+      isActive: false,
+      irrigationFrequency: 48,
     }, {
       userId: 1,
       name: "Clorofito",
@@ -48,7 +52,8 @@ module.exports = {
       minWaterPercent: 40,
       maxTemperatureClimate: 27,
       minTemperatureClimate: 16,
-      isActive: false
+      isActive: false,
+      irrigationFrequency: 72,
     }, {
       userId: 1,
       name: "Girassol",
@@ -57,7 +62,8 @@ module.exports = {
       minWaterPercent: 40,
       maxTemperatureClimate: 28,
       minTemperatureClimate: 24,
-      isActive: false
+      isActive: false,
+      irrigationFrequency: 24,
     }, {
       userId: 1,
       name: "Mammillaria Bocasana",
@@ -66,7 +72,8 @@ module.exports = {
       minWaterPercent: 5,
       maxTemperatureClimate: 28,
       minTemperatureClimate: 20,
-      isActive: false
+      isActive: false,
+      irrigationFrequency: 0.00001,
     },
     ], {});
   },

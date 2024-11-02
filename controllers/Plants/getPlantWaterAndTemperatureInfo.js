@@ -3,29 +3,25 @@ import models from "../../db/models"
 import { createErrorLog, createActionLog } from '../createLogs';
 
 export default async function getPlantWaterAndTemperatureInfo(req, res) {
-    const { plantId } = req.body;
-
     try {
-        if (_.isNil(plantId)) throw new Error("É necessário passar um ID")
-
         const data = await models.Plants.findOne({
             where: {
-                id: plantId,
+                isActive: true,
                 deletedAt: null
             },
-            attributes: ['minWaterPercent', 'idealWaterPercent', 'maxTemperatureClimate', 'minTemperatureClimate']
+            attributes: ['minWaterPercent', 'idealWaterPercent', 'maxTemperatureClimate', 'minTemperatureClimate'] // TO:DO receber frequência de irrigação
         });
 
         if (_.isNil(data)) throw new Error("Não encontramos nenhuma planta com este ID")
 
-        await createActionLog("Busca de planta", null, null, plantId)
+        await createActionLog("Busca de planta", null, null, data.id)
         return res.status(200).json({
             message: "Planta localizada!",
             data
         })
 
     } catch (err) {
-        await createErrorLog(err.stack, "Busca de planta", plantId)
+        await createErrorLog(err.stack, "Busca de planta", null)
         return res.status(500).json({
             message: "Ouve um erro ao buscar os dados da planta.",
             error: err.message

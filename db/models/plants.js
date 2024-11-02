@@ -22,6 +22,7 @@ module.exports = (sequelize, DataTypes) => {
     maxTemperatureClimate: DataTypes.INTEGER,
     minTemperatureClimate: DataTypes.INTEGER,
     isActive: DataTypes.BOOLEAN,
+    irrigationFrequency: DataTypes.FLOAT,
   }, {
     sequelize,
     modelName: 'Plants',

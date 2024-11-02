@@ -42,6 +42,10 @@ module.exports = {
         type: Sequelize.BOOLEAN,
         defaultValue: false,
       },
+      irrigationFrequency: {
+        allowNull: false,
+        type: Sequelize.FLOAT,
+      },
       createdAt: {
         allowNull: false,
         defaultValue: new Date().toISOString().replace(/T/, ' ').replace(/\..+/, ''),

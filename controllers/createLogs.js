@@ -8,6 +8,7 @@ export const createErrorLog = async (error, action, plantId) => {
             const data = await models.ErrorLogs.create({
                 error,
                 action,
+                plantId,
 
             }, {
                 transaction,
@@ -22,7 +23,7 @@ export const createErrorLog = async (error, action, plantId) => {
         });
     } catch (err) {
         return {
-            message: "Houve um erro ao registrar erro.",
+            message: "Houve um problema ao registrar erro.",
             error: err.message
         }
     }
