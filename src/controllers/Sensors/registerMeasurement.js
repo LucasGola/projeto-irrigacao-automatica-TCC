@@ -6,13 +6,14 @@ import getPlantInfo from "../Plants/getPlantInfo"
 const registerMeasurement = async (req, res) => {
     const {
         dht11Humidity, dht11Temperature,
-        hygrometer, waterFlow } = req.body;
+        hygrometer, waterFlow, batteryPercent } = req.body;
 
     console.log("\nResgistrando medições dos sensores!\n")
 
     try {
         if (_.isNil(dht11Humidity) || _.isNil(dht11Temperature) ||
-            _.isNil(hygrometer) || _.isNil(waterFlow)) throw new Error("Todos os dados são necessários.")
+            _.isNil(batteryPercent) || _.isNil(hygrometer) ||
+            _.isNil(waterFlow)) throw new Error("Todos os dados são necessários.")
 
         const plant = await models.Plants.findOne({ where: { isActive: true, deletedAt: null } })
 
@@ -49,8 +50,17 @@ const registerMeasurement = async (req, res) => {
                 transaction,
             });
 
+            const batteryPercentData = await models.SensorLogs.create({
+                sensor: "Bateria",
+                measurement: batteryPercent,        // Porcentagem
+                plantId: plant.id,
+            }, {
+                transaction,
+            });
+
             if (_.isNil(dht11HumidityData) || _.isNil(dht11TemperatureData) ||
-                _.isNil(hygrometerData) || _.isNil(waterFlowData)) throw new Error("Não foi possível registrar os dados dos sensores.")
+                _.isNil(hygrometerData) || _.isNil(waterFlowData) || _.isNil(batteryPercentData)
+            ) throw new Error("Não foi possível registrar os dados dos sensores.")
 
             await createActionLog("Dados dos sensores registrados.", null, null, plant.id)
             return res.status(200).json({

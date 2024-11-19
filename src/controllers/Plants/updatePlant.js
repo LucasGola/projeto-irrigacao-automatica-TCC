@@ -7,7 +7,7 @@ export default async function updatePlantInfo(req, res) {
         maxTemperatureClimate, minTemperatureClimate, isActive, irrigationFrequency } = req.body;
 
     try {
-        if (_.isNil(idealWaterPercent) || _.isNil(minWaterPercent) ||
+        if (_.isNil(plantId) || _.isNil(idealWaterPercent) || _.isNil(minWaterPercent) ||
             _.isNil(maxTemperatureClimate) || _.isNil(minTemperatureClimate) ||
             _.isNil(isActive) || _.isNil(irrigationFrequency)) throw new Error("Todos os campos são necessários");
 
@@ -15,9 +15,7 @@ export default async function updatePlantInfo(req, res) {
             if (isActive == true) {
                 const oldActivePlant = await models.Plants.findOne({ where: { isActive: true, deletedAt: null } });
 
-                if (_.isNil(oldActivePlant)) throw new Error("Não foi possível localizar a antiga planta ativa.");
-
-                if (plantId != oldActivePlant.id) {
+                if (!_.isNil(oldActivePlant) && plantId != oldActivePlant.id) {
                     const oldActivePlantUpdated = await models.Plants.update({
                         isActive: false,
                         updatedAt: new Date().toISOString().replace(/T/, ' ').replace(/\..+/, ''),
@@ -83,7 +81,7 @@ export default async function updatePlantInfo(req, res) {
         })
 
     } catch (err) {
-        await createErrorLog(err.stack, "Atualização de dados de planta.", plantId)
+        await createErrorLog(err.stack, "Atualização de dados de planta.", null)
         return res.status(500).json({
             message: "Ouve um erro ao atualizar os dados da planta.",
             error: err.message

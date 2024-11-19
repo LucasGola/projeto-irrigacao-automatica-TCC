@@ -6,7 +6,7 @@ export const createErrorLog = async (error, action, plantId) => {
     try {
         await models.sequelize.transaction(async (transaction) => {
             const data = await models.ErrorLogs.create({
-                error,
+                error: error.split('\n')[0],
                 action,
                 plantId,
 
