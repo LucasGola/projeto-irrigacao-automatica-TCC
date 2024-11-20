@@ -4,12 +4,12 @@ import { createErrorLog, createActionLog } from '../createLogs';
 
 const registerPlant = async (req, res) => {
     const { userId, name, type, idealWaterPercent, minWaterPercent,
-        maxTemperatureClimate, minTemperatureClimate } = req.body;
+        maxTemperatureClimate, minTemperatureClimate, irrigationFrequency } = req.body;
 
     try {
         if (_.isNil(userId) || _.isNil(name) || _.isNil(type) ||
             _.isNil(idealWaterPercent) || _.isNil(minWaterPercent) ||
-            _.isNil(maxTemperatureClimate) || _.isNil(minTemperatureClimate)
+            _.isNil(maxTemperatureClimate) || _.isNil(minTemperatureClimate) || _.isNil(irrigationFrequency)
         ) throw new Error("Todos os dados são necessários.")
 
         await models.sequelize.transaction(async (transaction) => {
@@ -21,6 +21,7 @@ const registerPlant = async (req, res) => {
                 minWaterPercent,
                 maxTemperatureClimate,
                 minTemperatureClimate,
+                irrigationFrequency,
             }, {
                 transaction,
             })

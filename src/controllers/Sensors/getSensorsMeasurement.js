@@ -5,7 +5,10 @@ import { createErrorLog, createActionLog } from '../createLogs';
 export default async function getSensorsTimeline(req, res) {
     try {
         await models.sequelize.transaction(async (transaction) => {
-            const data = await models.SensorLogs.findAll();
+            const data = await models.SensorLogs.findAll({
+                order: [['createdAt', 'DESC']]
+            });
+
 
             if (_.isNil(data)) throw new Error("Não encontramos nenhum registro de dados de sensores.");
 

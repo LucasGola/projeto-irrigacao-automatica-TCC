@@ -4,6 +4,7 @@ import getPlantInfo from "./getPlantInfo";
 import getPlantWaterAndTemperatureInfo from "./getPlantWaterAndTemperatureInfo";
 import updatePlantInfo from "./updatePlant";
 import getAllPlantInfo from "./getAllPlantInfo";
+import getPlantsNameAndID from "./getAllPlantsNameAndID";
 
 export default {
     deletePlant,
@@ -12,4 +13,5 @@ export default {
     getAllPlantInfo,
     getPlantWaterAndTemperatureInfo,
     updatePlantInfo,
+    getPlantsNameAndID,
 }

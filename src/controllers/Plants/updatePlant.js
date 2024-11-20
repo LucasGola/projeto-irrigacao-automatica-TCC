@@ -3,13 +3,19 @@ import models from "../../db/models"
 import { createErrorLog, createActionLog } from '../createLogs';
 
 export default async function updatePlantInfo(req, res) {
-    const { plantId, idealWaterPercent, minWaterPercent,
+    const { plantId, name, type, idealWaterPercent, minWaterPercent,
         maxTemperatureClimate, minTemperatureClimate, isActive, irrigationFrequency } = req.body;
 
     try {
-        if (_.isNil(plantId) || _.isNil(idealWaterPercent) || _.isNil(minWaterPercent) ||
-            _.isNil(maxTemperatureClimate) || _.isNil(minTemperatureClimate) ||
-            _.isNil(isActive) || _.isNil(irrigationFrequency)) throw new Error("Todos os campos são necessários");
+        if (_.isNil(plantId)) throw new Error("É necessário passar o ID da planta!");
+        if (_.isNil(name)) throw new Error("O campo 'Nome' é obrigatório!");
+        if (_.isNil(type)) throw new Error("O campo 'Tipo' é obrigatório!");
+        if (_.isNil(idealWaterPercent)) throw new Error("O campo 'Umidade Ideal' é obrigatório!");
+        if (_.isNil(minWaterPercent)) throw new Error("O campo 'Mínimo de Umidade' é obrigatório!");
+        if (_.isNil(maxTemperatureClimate)) throw new Error("O campo 'Temperatura Mínima' é obrigatório!");
+        if (_.isNil(minTemperatureClimate)) throw new Error("O campo 'Temperatura Máxima' é obrigatório!");
+        if (_.isNil(irrigationFrequency)) throw new Error("O campo 'Frequência de Irrigação' é obrigatório!");
+        if (_.isNil(isActive)) throw new Error("O campo 'Definir Como Planta Ativa' é obrigatório!");
 
         await models.sequelize.transaction(async (transaction) => {
             if (isActive == true) {
@@ -36,23 +42,31 @@ export default async function updatePlantInfo(req, res) {
             if (_.isNil(plant)) throw new Error("Nenhuma planta encontrada com o ID fornecido.");
 
             const oldData = `{
-            ${plant.dataValues.idealWaterPercent},
-            ${plant.dataValues.minWaterPercent},
-            ${plant.dataValues.maxTemperatureClimate},
-            ${plant.dataValues.minTemperatureClimate},
-            ${plant.dataValues.irrigationFrequency},
+                ${plant.dataValues.name},
+                ${plant.dataValues.type},
+                ${plant.dataValues.idealWaterPercent},
+                ${plant.dataValues.minWaterPercent},
+                ${plant.dataValues.maxTemperatureClimate},
+                ${plant.dataValues.minTemperatureClimate},
+                ${plant.dataValues.isActive},
+                ${plant.dataValues.irrigationFrequency},
         }`
 
             const newObject = `{
-            ${idealWaterPercent},
-            ${minWaterPercent},
-            ${maxTemperatureClimate},
-            ${minTemperatureClimate},
-            ${irrigationFrequency},
+                ${name},
+                ${type},
+                ${idealWaterPercent},
+                ${minWaterPercent},
+                ${maxTemperatureClimate},
+                ${minTemperatureClimate},
+                ${isActive},
+                ${irrigationFrequency},
         }`
 
 
             const data = await models.Plants.update({
+                name,
+                type,
                 idealWaterPercent,
                 minWaterPercent,
                 maxTemperatureClimate,
