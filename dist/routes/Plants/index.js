@@ -11,6 +11,7 @@ var plantsRouter = (0, _express.Router)();
 plantsRouter.get('/active-plant-info', _Plants["default"].getPlantInfo);
 plantsRouter.get('/info/all', _Plants["default"].getAllPlantInfo);
 plantsRouter.get('/water-and-tempreature-info', _Plants["default"].getPlantWaterAndTemperatureInfo);
+plantsRouter.get('/plants-names', _Plants["default"].getPlantsNameAndID);
 plantsRouter.post('/register', _Plants["default"].registerPlant);
 plantsRouter.put('/update-info', _Plants["default"].updatePlantInfo);
 plantsRouter["delete"]('/delete', _Plants["default"].deletePlant);

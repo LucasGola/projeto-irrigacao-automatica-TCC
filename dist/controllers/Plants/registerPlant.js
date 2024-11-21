@@ -14,13 +14,13 @@ function asyncGeneratorStep(n, t, e, r, o, a, c) { try { var i = n[a](c), u = i.
 function _asyncToGenerator(n) { return function () { var t = this, e = arguments; return new Promise(function (r, o) { var a = n.apply(t, e); function _next(n) { asyncGeneratorStep(a, r, o, _next, _throw, "next", n); } function _throw(n) { asyncGeneratorStep(a, r, o, _next, _throw, "throw", n); } _next(void 0); }); }; }
 var registerPlant = /*#__PURE__*/function () {
   var _ref = _asyncToGenerator(/*#__PURE__*/_regeneratorRuntime().mark(function _callee2(req, res) {
-    var _req$body, userId, name, type, idealWaterPercent, minWaterPercent, maxTemperatureClimate, minTemperatureClimate;
+    var _req$body, userId, name, type, idealWaterPercent, minWaterPercent, maxTemperatureClimate, minTemperatureClimate, irrigationFrequency;
     return _regeneratorRuntime().wrap(function _callee2$(_context2) {
       while (1) switch (_context2.prev = _context2.next) {
         case 0:
-          _req$body = req.body, userId = _req$body.userId, name = _req$body.name, type = _req$body.type, idealWaterPercent = _req$body.idealWaterPercent, minWaterPercent = _req$body.minWaterPercent, maxTemperatureClimate = _req$body.maxTemperatureClimate, minTemperatureClimate = _req$body.minTemperatureClimate;
+          _req$body = req.body, userId = _req$body.userId, name = _req$body.name, type = _req$body.type, idealWaterPercent = _req$body.idealWaterPercent, minWaterPercent = _req$body.minWaterPercent, maxTemperatureClimate = _req$body.maxTemperatureClimate, minTemperatureClimate = _req$body.minTemperatureClimate, irrigationFrequency = _req$body.irrigationFrequency;
           _context2.prev = 1;
-          if (!(_lodash["default"].isNil(userId) || _lodash["default"].isNil(name) || _lodash["default"].isNil(type) || _lodash["default"].isNil(idealWaterPercent) || _lodash["default"].isNil(minWaterPercent) || _lodash["default"].isNil(maxTemperatureClimate) || _lodash["default"].isNil(minTemperatureClimate))) {
+          if (!(_lodash["default"].isNil(userId) || _lodash["default"].isNil(name) || _lodash["default"].isNil(type) || _lodash["default"].isNil(idealWaterPercent) || _lodash["default"].isNil(minWaterPercent) || _lodash["default"].isNil(maxTemperatureClimate) || _lodash["default"].isNil(minTemperatureClimate) || _lodash["default"].isNil(irrigationFrequency))) {
             _context2.next = 4;
             break;
           }
@@ -41,7 +41,8 @@ var registerPlant = /*#__PURE__*/function () {
                       idealWaterPercent: idealWaterPercent,
                       minWaterPercent: minWaterPercent,
                       maxTemperatureClimate: maxTemperatureClimate,
-                      minTemperatureClimate: minTemperatureClimate
+                      minTemperatureClimate: minTemperatureClimate,
+                      irrigationFrequency: irrigationFrequency
                     }, {
                       transaction: transaction
                     });
