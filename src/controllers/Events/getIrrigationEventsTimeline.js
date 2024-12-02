@@ -5,7 +5,9 @@ import { createErrorLog, createActionLog } from '../createLogs';
 export default async function getIrrigationEventsTimeline(req, res) {
     try {
         await models.sequelize.transaction(async (transaction) => {
-            const data = await models.IrrigationLogs.findAll();
+            const data = await models.IrrigationLogs.findAll({
+                order: [['createdAt', 'DESC']]
+            });
 
             if (_.isNil(data)) throw new Error("Não encontramos nenhum evento de irrigação.");
 

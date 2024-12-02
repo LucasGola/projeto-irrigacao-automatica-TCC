@@ -24,7 +24,7 @@ export default async function updatePlantInfo(req, res) {
                 if (!_.isNil(oldActivePlant) && plantId != oldActivePlant.id) {
                     const oldActivePlantUpdated = await models.Plants.update({
                         isActive: false,
-                        updatedAt: new Date().toISOString().replace(/T/, ' ').replace(/\..+/, ''),
+                         
                     }, {
                         where: {
                             id: oldActivePlant.id,

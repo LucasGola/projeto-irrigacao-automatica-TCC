@@ -11,9 +11,11 @@ const registerMeasurement = async (req, res) => {
     console.log("\nResgistrando medições dos sensores!\n")
 
     try {
-        if (_.isNil(dht11Humidity) || _.isNil(dht11Temperature) ||
-            _.isNil(batteryPercent) || _.isNil(hygrometer) ||
-            _.isNil(waterFlow)) throw new Error("Todos os dados são necessários.")
+        if (_.isNil(dht11Humidity)) throw new Error("É necessário passar os dados de humidade do ar.");
+        if (_.isNil(dht11Temperature)) throw new Error("É necessário passar os dados de temperatura do ar.");
+        if (_.isNil(batteryPercent)) throw new Error("É necessário passar os dados da bateria.");
+        if (_.isNil(hygrometer)) throw new Error("É necessário passar os dados de humidade do solo.");
+        if (_.isNil(waterFlow)) throw new Error("É necessário passar os dados de vazão d'água.");
 
         const plant = await models.Plants.findOne({ where: { isActive: true, deletedAt: null } })
 
