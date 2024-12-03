@@ -1,9 +1,9 @@
-import getIrrigationEventsTimeline from "./getIrrigationEventsTimeline";
+import getAllIrrigationEventsTimeline from "./getAllIrrigationEventsTimeline";
 import registerEvent from "./registerEvent";
 
 
 
 export default {
-    getIrrigationEventsTimeline,
+    getAllIrrigationEventsTimeline,
     registerEvent
 }

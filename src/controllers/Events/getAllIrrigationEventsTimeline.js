@@ -2,7 +2,7 @@ import _ from "lodash";
 import models from "../../db/models"
 import { createErrorLog, createActionLog } from '../createLogs';
 
-export default async function getIrrigationEventsTimeline(req, res) {
+export default async function getAllIrrigationEventsTimeline(req, res) {
     try {
         await models.sequelize.transaction(async (transaction) => {
             const data = await models.IrrigationLogs.findAll({
