@@ -1,62 +1,57 @@
 import models from '../../db/models';
-import moment from 'moment';
 import { SimpleLinearRegression } from 'ml-regression';
 import { createErrorLog, createActionLog } from '../createLogs'; // Adicionando os imports
 
-async function getIrrigationEventsTimeline() {
-    // Função para obter dados de irrigação do banco de dados
-    return await models.IrrigationLogs.findAll();
-}
 
-function calcularProximaIrrigacaoComRegressao(eventos) {
-    const irrigacaoEventos = eventos.filter(evento => evento.action.includes("irrigada"));
+function calculateNextIrrigationWithRegression(events) {
+    const irrigationEvents = events.filter(event => event.action.includes("irrigada"));
 
-    if (irrigacaoEventos.length < 2) {
-        throw new Error("Não há eventos de irrigação suficientes para realizar a projeção.");
+    if (irrigationEvents.length < 2) {
+        throw new Error("Não há events de irrigação suficientes para realizar a projeção.");
     }
 
-    // Ordena os eventos por data
-    irrigacaoEventos.sort((a, b) => new Date(a.createdAt) - new Date(b.createdAt));
+    // Ordena os events por data
+    irrigationEvents.sort((a, b) => new Date(a.createdAt) - new Date(b.createdAt));
 
-    // Converte as datas para timestamps e calcula os intervalos entre eventos
-    const timestamps = irrigacaoEventos.map(evento => new Date(evento.createdAt).getTime());
-    const intervalos = [];
+    // Converte as datas para timestamps e calcula os intervals entre events
+    const timestamps = irrigationEvents.map(event => new Date(event.createdAt).getTime());
+    const intervals = [];
     for (let i = 1; i < timestamps.length; i++) {
-        intervalos.push(timestamps[i] - timestamps[i - 1]);
+        intervals.push(timestamps[i] - timestamps[i - 1]);
     }
 
     // Prepara os dados para regressão
-    const x = intervalos.map((intervalo, index) => index);
-    const y = intervalos;
+    const x = intervals.map((intervalo, index) => index);
+    const y = intervals;
 
     // Treina o modelo de regressão linear
     const regression = new SimpleLinearRegression(x, y);
 
-    // Projeta os próximos eventos de irrigação para os próximos 3 meses
-    const proximaData = [];
-    let ultimoEvento = new Date(irrigacaoEventos[irrigacaoEventos.length - 1].createdAt);
-    const tresMeses = 3 * 30 * 24 * 60 * 60 * 1000; // Três meses em milissegundos
-    const dataLimite = ultimoEvento.getTime() + tresMeses;
+    // Projeta os próximos events de irrigação para os próximos 3 meses
+    const nextDate = [];
+    let lastEvent = new Date(irrigationEvents[irrigationEvents.length - 1].createdAt);
+    const threeMonths = 3 * 30 * 24 * 60 * 60 * 1000; // Três meses em milissegundos
+    const deadLine = lastEvent.getTime() + threeMonths;
 
-    while (ultimoEvento.getTime() < dataLimite) {
-        const proximoIntervalo = regression.predict(proximaData.length);
-        ultimoEvento = new Date(ultimoEvento.getTime() + proximoIntervalo);
-        proximaData.push(ultimoEvento);
+    while (lastEvent.getTime() < deadLine) {
+        const nextInterval = regression.predict(nextDate.length);
+        lastEvent = new Date(lastEvent.getTime() + nextInterval);
+        nextDate.push(lastEvent);
     }
 
-    return proximaData;
+    return nextDate;
 }
 
 export default async function irrigationProjection(req, res) {
     try {
         await models.sequelize.transaction(async (transaction) => {
-            const eventos = await getIrrigationEventsTimeline();
+            const events = await await models.IrrigationLogs.findAll();
 
-            if (!eventos || eventos.length === 0) {
-                throw new Error("Não encontramos nenhum evento de irrigação.");
+            if (!events || events.length === 0) {
+                throw new Error("Não encontramos nenhum event de irrigação.");
             }
 
-            const projection = calcularProximaIrrigacaoComRegressao(eventos);
+            const projection = calculateNextIrrigationWithRegression(events);
 
             await createActionLog("Projeção de irrigação", null, null, null);
             return res.status(200).json({
