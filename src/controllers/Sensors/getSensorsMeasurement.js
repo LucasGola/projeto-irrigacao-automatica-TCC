@@ -6,7 +6,8 @@ export default async function getSensorsTimeline(req, res) {
     try {
         await models.sequelize.transaction(async (transaction) => {
             const data = await models.SensorLogs.findAll({
-                order: [['createdAt', 'DESC']]
+                order: [['createdAt', 'DESC']],
+                limit: 18000
             });
 
 
