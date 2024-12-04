@@ -10,7 +10,11 @@
     "migrate": "npx sequelize-cli db:migrate",
     "undo:migrate": "npx sequelize-cli db:migrate:undo",
     "drop:all": "npx sequelize-cli db:migrate:undo:all",
-    "seed": "npx sequelize-cli db:seed:all",
+    "seed:plants": "npx sequelize-cli db:seed --seed 20240506153751-Plants.js",
+    "seed:irrigationlogs": "npx sequelize-cli db:seed --seed 20241203234854-IrrigationLogs.js",
+    "seed:sensorlogs": "npx sequelize-cli db:seed --seed 20241203234903-SensorLogs.js",
+    "populate": "npm run seed:irrigationlogs && npm run seed:sensorlogs",
+    "seed:all": "npx sequelize-cli db:seed:all",
     "undo:seed": "npx sequelize-cli db:seed:undo",
     "undo:all:seeds": "npx sequelize-cli db:seed:undo:all"
   },
