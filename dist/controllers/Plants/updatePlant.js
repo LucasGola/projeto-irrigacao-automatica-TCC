@@ -103,8 +103,7 @@ function _updatePlantInfo() {
                     }
                     _context.next = 7;
                     return _models["default"].Plants.update({
-                      isActive: false,
-                      updatedAt: new Date().toISOString().replace(/T/, ' ').replace(/\..+/, '')
+                      isActive: false
                     }, {
                       where: {
                         id: oldActivePlant.id,

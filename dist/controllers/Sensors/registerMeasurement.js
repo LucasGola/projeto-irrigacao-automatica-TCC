@@ -22,22 +22,46 @@ var registerMeasurement = /*#__PURE__*/function () {
           _req$body = req.body, dht11Humidity = _req$body.dht11Humidity, dht11Temperature = _req$body.dht11Temperature, hygrometer = _req$body.hygrometer, waterFlow = _req$body.waterFlow, batteryPercent = _req$body.batteryPercent;
           console.log("\nResgistrando medições dos sensores!\n");
           _context2.prev = 2;
-          if (!(_lodash["default"].isNil(dht11Humidity) || _lodash["default"].isNil(dht11Temperature) || _lodash["default"].isNil(batteryPercent) || _lodash["default"].isNil(hygrometer) || _lodash["default"].isNil(waterFlow))) {
+          if (!_lodash["default"].isNil(dht11Humidity)) {
             _context2.next = 5;
             break;
           }
-          throw new Error("Todos os dados são necessários.");
+          throw new Error("É necessário passar os dados de humidade do ar.");
         case 5:
-          _context2.next = 7;
+          if (!_lodash["default"].isNil(dht11Temperature)) {
+            _context2.next = 7;
+            break;
+          }
+          throw new Error("É necessário passar os dados de temperatura do ar.");
+        case 7:
+          if (!_lodash["default"].isNil(batteryPercent)) {
+            _context2.next = 9;
+            break;
+          }
+          throw new Error("É necessário passar os dados da bateria.");
+        case 9:
+          if (!_lodash["default"].isNil(hygrometer)) {
+            _context2.next = 11;
+            break;
+          }
+          throw new Error("É necessário passar os dados de humidade do solo.");
+        case 11:
+          if (!_lodash["default"].isNil(waterFlow)) {
+            _context2.next = 13;
+            break;
+          }
+          throw new Error("É necessário passar os dados de vazão d'água.");
+        case 13:
+          _context2.next = 15;
           return _models["default"].Plants.findOne({
             where: {
               isActive: true,
               deletedAt: null
             }
           });
-        case 7:
+        case 15:
           plant = _context2.sent;
-          _context2.next = 10;
+          _context2.next = 18;
           return _models["default"].sequelize.transaction(/*#__PURE__*/function () {
             var _ref2 = _asyncToGenerator(/*#__PURE__*/_regeneratorRuntime().mark(function _callee(transaction) {
               var dht11HumidityData, dht11TemperatureData, hygrometerData, waterFlowData, batteryPercentData;
@@ -127,24 +151,24 @@ var registerMeasurement = /*#__PURE__*/function () {
               return _ref2.apply(this, arguments);
             };
           }());
-        case 10:
-          _context2.next = 17;
+        case 18:
+          _context2.next = 25;
           break;
-        case 12:
-          _context2.prev = 12;
+        case 20:
+          _context2.prev = 20;
           _context2.t0 = _context2["catch"](2);
-          _context2.next = 16;
+          _context2.next = 24;
           return (0, _createLogs.createErrorLog)(_context2.t0.stack, "Registro de dados dos sensores", null);
-        case 16:
+        case 24:
           return _context2.abrupt("return", res.status(500).json({
             message: "Houve um erro ao registrar os dados dos sensores.",
             error: _context2.t0.message
           }));
-        case 17:
+        case 25:
         case "end":
           return _context2.stop();
       }
-    }, _callee2, null, [[2, 12]]);
+    }, _callee2, null, [[2, 20]]);
   }));
   return function registerMeasurement(_x, _x2) {
     return _ref.apply(this, arguments);
